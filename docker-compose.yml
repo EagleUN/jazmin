@@ -1,0 +1,7 @@
+version: '3.3'
+
+services:
+  jazmin:
+    build: .
+    ports:
+      - '3006:3006'

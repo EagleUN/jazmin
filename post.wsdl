@@ -1,0 +1,74 @@
+<definitions name="PostService"
+   targetNamespace="http://www.examples.com/wsdl/PostService.wsdl"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns="http://www.examples.com/wsdl/PostService.wsdl"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ 
+   <message name="PostRequest">
+      <part name="email" type="xsd:string"/>
+   </message>
+	
+   <message name="PostResponse">
+      <part name="Posts" type="PostList"/>
+   </message>
+
+   <xsd:complexType name='PostList'>
+      <xsd:complexContent mixed='false'>
+         <xsd:restriction base='soapenc:Array'>
+            <xsd:attribute arrayType='Post[]' ref='soapenc:arrayType' />
+         </xsd:restriction>
+      </xsd:complexContent>
+   </xsd:complexType>   
+
+   <xsd:complexType name='Post'>
+      <xsd:all>
+         <xsd:element
+            minOccurs='0'
+            maxOccurs='1'
+            name='content'
+            type='xsd:string'/>
+         <xsd:element
+            minOccurs='0'
+            maxOccurs='1'
+            name='createdAt'
+            type='xsd:string'/>
+      </xsd:all>
+   </xsd:complexType>
+
+   <portType name="Post_PortType">
+      <operation name="getPosts">
+         <input message="tns:PostRequest"/>
+         <output message="tns:PostResponse"/>
+      </operation>
+   </portType>
+
+   <binding name="Post_Binding" type="tns:Post_PortType">
+      <soap:binding style="rpc"
+         transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="getPosts">
+         <soap:operation soapAction="getPosts"/>
+         <input>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:postservice"
+               use="encoded"/>
+         </input>
+		
+         <output>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:postservice"
+               use="encoded"/>
+         </output>
+      </operation>
+   </binding>
+
+   <service name="Post_Service">
+      <documentation>WSDL File for PostService</documentation>
+      <port binding="tns:Post_Binding" name="Post_Port">
+         <soap:address
+            location="http://35.232.95.82:3006/soapservice" />
+      </port>
+   </service>
+</definitions>
