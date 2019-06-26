@@ -2,17 +2,28 @@ const express = require('express')
 const fs = require("fs")
 const router = express.Router()
 
-const service = require('./service')
+const musicService = require('./musicService')
 
 const servicewsdl = 'post.wsdl';
 
 
-router.get('/test',  
+router.get('/musicList/:email',  
   async (req, res) => {
     try {
-      const response = await service.serviceTest();
-      console.log(response)
-      res.status(200).json(response)
+      const email = req.params.email
+      const response = await musicService.musicListRequest(email)
+      const values = response.elements[0].elements[0].elements[0].elements
+      let listName
+      let listUrl      
+      values.forEach(object => {
+        if(object.name === "listName") {
+          listName = object.elements[0].text          
+        } else if(object.name === "listImage") {
+          listUrl = object.elements[0].text          
+        }
+      })         
+
+      res.status(200).json({name: listName, url: listUrl})
     } catch (err) {
       res.status(500).json(err)
     }
