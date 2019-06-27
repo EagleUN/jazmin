@@ -1,7 +1,9 @@
 const soapRequest = require("easy-soap-request")
 const xmlToJson = require("xml-js")
-
+const axios = require("axios")
+const API_URL = 'http://35.232.95.82/graphql';
 const url = "http://34.66.226.238:4000/wslists/action"
+
 const headers = {
   "user-agent": "sampleTest",
   "Content-Type": "text/xml;charset=UTF-8",
@@ -20,11 +22,36 @@ const createXml = (email) => {
 }
 
 const musicListRequest = async (id) => {
-  const xml = createXml(id)
-  const { response } = await soapRequest(url, headers, xml)
-  const { body } = response
-  const jsonBody = JSON.parse(xmlToJson.xml2json(body))  
-  return jsonBody
+  let body =  { 
+    query: `
+      query {
+        userById(id: {id: "${id}"}){
+          id
+          email
+          name
+          last_name
+        }
+      }
+    `, 
+    variables: {}
+  }
+  let options = {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+  }
+  let userEmail
+  const data = await axios.post(API_URL,body, options);
+  if(data.data.data){
+    const user = data.data.data.userByEmail;
+    userEmail = user.email;
+    const xml = createXml(userEmail)
+    const { response } = await soapRequest(url, headers, xml)
+    const { body } = response
+    const jsonBody = JSON.parse(xmlToJson.xml2json(body))  
+    return jsonBody 
+  } 
+  return {}
 }
 
 module.exports = {

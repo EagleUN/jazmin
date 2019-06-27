@@ -7,11 +7,11 @@ const musicService = require('./musicService')
 const servicewsdl = 'post.wsdl';
 
 
-router.get('/musicList/:email',  
+router.get('/musicList/:id',  
   async (req, res) => {
     try {
-      const email = req.params.email
-      const response = await musicService.musicListRequest(email)
+      const id = req.params.id
+      const response = await musicService.musicListRequest(id)
       const values = response.elements[0].elements[0].elements[0].elements
       let listName
       let listUrl      
