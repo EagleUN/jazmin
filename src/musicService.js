@@ -43,7 +43,7 @@ const musicListRequest = async (id) => {
   let userEmail
   const data = await axios.post(API_URL,body, options);
   if(data.data.data){
-    const user = data.data.data.userByEmail;
+    const user = data.data.data.userById;    
     userEmail = user.email;
     const xml = createXml(userEmail)
     const { response } = await soapRequest(url, headers, xml)
