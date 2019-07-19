@@ -2,8 +2,8 @@ const soapRequest = require("easy-soap-request")
 const xmlToJson = require("xml-js")
 const axios = require("axios")
 const API_URL = 'http://eagleun-api:500/graphql';
-
-const url = proccess.env.TUMUSIC_URL
+const Config = require('../Config');
+const url = Config.get('TUMUSICA_URL');
 
 const headers = {
   "user-agent": "sampleTest",
