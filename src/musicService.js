@@ -1,7 +1,7 @@
 const soapRequest = require("easy-soap-request")
 const xmlToJson = require("xml-js")
 const axios = require("axios")
-const API_URL = 'http://eagleun-api:500/graphql';
+const API_URL = 'http://eagleun-api:5000/graphql';
 const Config = require('../Config');
 const url = Config.get('TUMUSICA_URL');
 
