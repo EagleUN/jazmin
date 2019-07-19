@@ -1,5 +1,5 @@
-import config from "nconf";
-import path from "path";
+const config = require("nconf");
+const path = require("path");
 
 config
   .argv()
@@ -10,5 +10,5 @@ config
 
 config.defaults({});
 
-export default config;
+module.exports = config;
 
