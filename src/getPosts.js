@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const API_URL = 'http://35.232.95.82/graphql';
+const API_URL = 'http://eagleun-api:5000/graphql';
 
 const getPostsForUser = async (userEmail) => {
   let body =  { 
