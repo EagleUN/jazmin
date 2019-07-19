@@ -68,7 +68,7 @@
       <documentation>WSDL File for PostService</documentation>
       <port binding="tns:Post_Binding" name="Post_Port">
          <soap:address
-            location="http://35.232.95.82:3006/soapservice" />
+            location="http://35.206.86.140:3006/soapservice" />
       </port>
    </service>
 </definitions>
